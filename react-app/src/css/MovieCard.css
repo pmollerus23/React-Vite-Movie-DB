@@ -7,6 +7,8 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  max-width: 500px;   /* Set the maximum width */
+  max-height: auto; 
 }
 
 .movie-card:hover {
