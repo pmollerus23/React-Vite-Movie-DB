@@ -5,12 +5,12 @@ import NavBar from "./components/NavBar";
 import { MovieProvider } from "./contexts/MovieContext";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import { UserProvider } from "./contexts/UserContext";
+import { AuthProvider } from "./contexts/UserContext";
 import "./css/App.css";
 
 function App() {
   return (
-    <UserProvider>
+    <AuthProvider>
         <NavBar />
         <main className="main-content">
           <Routes>
@@ -19,7 +19,7 @@ function App() {
             <Route path="/register" element={<Register />} />
           </Routes>
         </main>
-    </UserProvider>
+    </AuthProvider>
   );
 }
 export default App;

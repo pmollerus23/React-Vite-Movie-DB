@@ -1,74 +1,90 @@
 // src/context/UserContext.tsx
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
-import { getUserId } from '../services/api';
+import { AuthService } from '../services/auth';
+import { AuthState, LoginFormData, RegistrationFormData, User } from '../types/auth';
 
-// Define the shape of the context state
-interface UserContextType {
-  user: string | null;
-  login: (string: string) => void;
+interface AuthContextType extends AuthState {
+  login: (data: LoginFormData) => Promise<void>;
+  register: (data: RegistrationFormData) => Promise<void>;
   logout: () => void;
 }
 
-// Create the UserContext with an initial default value
-const UserContext = createContext<UserContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Custom hook to use the UserContext
-export const useUser = (): UserContextType => {
-  const context = useContext(UserContext);
+export const useAuth = (): AuthContextType => {
+  const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useUser must be used within a UserProvider');
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };
 
-// UserContext Provider to wrap around your app
-interface UserProviderProps {
+interface AuthProviderProps {
   children: ReactNode;
 }
 
-export const UserProvider = ({ children }: UserProviderProps) => {
-  const [user, setUser] = useState<string | null>(null);
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+  const [authState, setAuthState] = useState<AuthState>({
+    user: null,
+    token: null,
+    isAuthenticated: false,
+  });
 
-  // Check for the stored token and validate on initial load
-  //  useEffect(() => {
-    useEffect(() => {
-      // console.log('i fire once');
-      // Get user data from localStorage if available
-      const storedUser = localStorage.getItem('authToken');
-      if (!storedUser) {
-        console.log("no stored user")// setUser(storedUser); // Set user data if it exists in localStorage
-      } else {
-        // Optionally, validate the token here by calling an API (e.g., getUserId)
-        (async () => {
-          try {
-            const response = await getUserId();
-            if (response) {
-              const data = response;
-              setUser(data.userName); // Store the user in state
-              localStorage.setItem('user', JSON.stringify(data)); // Persist user data in localStorage
-            } else {
-              localStorage.removeItem('user');
-            }
-          } catch (error) {
-            localStorage.removeItem('user');
-          }
-        })();
-      }
-    }, []);
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      AuthService.getUserProfile(token)
+        .then((user) => {
+          setAuthState({
+            user,
+            token,
+            isAuthenticated: true,
+          });
+        })
+        .catch(() => {
+          localStorage.removeItem('authToken');
+          setAuthState({
+            user: null,
+            token: null,
+            isAuthenticated: false,
+          });
+        });
+    }
+  }, []);
 
-  const login = (userData: string) => {
-    setUser(userData);
+  const login = async (data: LoginFormData) => {
+    const { user, token } = await AuthService.login(data);
+    localStorage.setItem('authToken', token);
+    setAuthState({
+      user,
+      token,
+      isAuthenticated: true,
+    });
+  };
+
+  const register = async (data: RegistrationFormData) => {
+    await AuthService.register(data);
   };
 
   const logout = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("user");
-    setUser(null);
+    localStorage.removeItem('authToken');
+    setAuthState({
+      user: null,
+      token: null,
+      isAuthenticated: false,
+    });
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        ...authState,
+        login,
+        register,
+        logout,
+      }}
+    >
       {children}
-    </UserContext.Provider>
+    </AuthContext.Provider>
   );
 };
