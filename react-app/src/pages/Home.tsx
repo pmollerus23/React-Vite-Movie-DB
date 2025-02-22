@@ -1,7 +1,7 @@
 import MovieCard from "../components/MovieCard";
 import { useState, useEffect } from "react";
 import { searchMovies, getPopularMovies } from "../services/api";
-import { useUser } from "../contexts/UserContext";
+import { useAuth } from "../contexts/UserContext";
 import "../css/Home.css";
 
 function Home() {
@@ -58,7 +58,7 @@ function Home() {
   //         Search
   //       </button>
   //     </form>
-      
+
   //       {error && <div className="error-message">{error}</div>}
 
   //     {loading ? (
@@ -73,15 +73,15 @@ function Home() {
   //   </div>
   // );
 
-  const { user, logout } = useUser();  // Get the user and logout function from context
-
+  // const { user, logout } = useUser();  // Get the user and logout function from context
+  const { user, isAuthenticated, login, logout } = useAuth();
   if (!user) {
     return <h2>Please log in to see the homepage.</h2>;
   }
 
   return (
     <div>
-      <h1>Welcome, { user }!</h1>
+      <h1>Welcome, {user.userName}!</h1>
       <button onClick={logout}>Logout</button>
     </div>
   );
