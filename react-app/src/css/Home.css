@@ -61,3 +61,28 @@
   width: 100%;
   box-sizing: border-box;
 }
+
+h1 {
+  font-family: 'Cursive', sans-serif; /* Fancy font */
+  font-size: 3em; /* Make it larger */
+  color: #000000; /* A warm, welcoming color */
+  text-align: center; /* Center align the heading */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+  padding: 20px; /* Add some space around the text */
+  background: linear-gradient(45deg, #ff6f61, #7854ee); /* Gradient background */
+  border-radius: 10px; /* Rounded corners for the background */
+  animation: bounce 2s infinite alternate; /* Bouncing effect */
+}
+
+/* Add a bounce animation */
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
