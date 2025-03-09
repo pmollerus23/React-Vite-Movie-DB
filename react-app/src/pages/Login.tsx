@@ -41,6 +41,7 @@ function Login() {
     } catch (error) {
       console.error(error);
       alert("Login failed");
+      logout();
     } finally {
       clearForm();
     }
