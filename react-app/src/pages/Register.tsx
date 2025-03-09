@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { validateEmail } from "../utils/utils";
 import { requestRegister } from "../services/api";
+import { useNavigate } from "react-router-dom";
+import "../css/Login.css";
 
 // Password Error Message component
 const PasswordErrorMessage = () => {
@@ -18,6 +20,8 @@ export interface RegistrationFormData {
 }
 
 function Register() {
+  const navigate = useNavigate();
+
   // Use the interface to define the state types
   const [formData, setFormData] = useState<RegistrationFormData>({
     firstName: "",
@@ -59,18 +63,20 @@ function Register() {
       await requestRegister(formData);
       alert("Account created!");
       clearForm();
+      navigate("/login")
     } catch (error) {
       console.error("Error registering account", error);
+      alert("Error creating account, check console.");
     } finally {
         clearForm();
     }
   };
 
   return (
-    <div className="App">
+    <div className="login">
       <form onSubmit={handleSubmit}>
         <fieldset>
-          <h2>Sign Up</h2>
+          <h2>Register Account</h2>
 
           <div className="Field">
             <label>

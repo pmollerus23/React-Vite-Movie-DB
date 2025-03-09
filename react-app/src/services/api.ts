@@ -1,8 +1,16 @@
 import { LoginFormData } from "../pages/Login";
 import { RegistrationFormData } from "../pages/Register";
+import { ProfileFormData } from "../types/auth";
+import { useAuth } from "../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
+
 
 const API_KEY = "c62e64ee8d699d4571b7633fb77a867f";
 const BASE_URL = "https://api.themoviedb.org/3";
+
+// const navigate = useNavigate();
+// const { user, isAuthenticated, login, logout } = useAuth();
+
 
 export const getPopularMovies = async () => {
   const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}`);
@@ -26,7 +34,7 @@ export const requestRegister = async (data: RegistrationFormData) => {
     email: data.email,
     password: data.password,
     firstname: data.firstName,
-    lastname: data.lastName
+    lastname: data.lastName,
   };
   const response = await fetch("http://localhost:5281/register", {
     method: "POST",
@@ -81,7 +89,7 @@ const fetchWithAuth = async (url: string, options = {}) => {
 
   const response = await fetch(url, {
     ...options,
-    headers
+    headers,
   });
 
   return response;
@@ -104,3 +112,23 @@ export const getUserId = async () => {
     throw new Error("error passing auth");
   }
 };
+
+// export const setProfile = async (data: ProfileFormData) => {
+//   const token = localStorage.getItem("authToken");
+
+//   if (!(isAuthenticated && token)) {
+//     console.log("User is not authenticated - cannot fetch profile");
+//     alert("User is not authenticated - cannot fetch profile")
+//     navigate("/login");
+//     return;
+//   }
+
+//   const response = await fetchWithAuth("http://localhost:5281/api/user", {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "Access-Control-Allow-Origin": "*",
+//     },
+//   });
+
+// };

@@ -1,0 +1,6 @@
+export const ERROR_CODES = {
+    PROFILE_NOT_EXIST: 'PROFILE_NOT_EXIST',
+    INVALID_CREDENTIALS: 'INVALID_CREDENTIALS',
+    ACCOUNT_LOCKED: 'ACCOUNT_LOCKED',
+    // ... other error codes
+  };
