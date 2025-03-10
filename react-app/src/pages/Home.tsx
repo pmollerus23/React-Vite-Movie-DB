@@ -5,17 +5,18 @@ import { useAuth } from "../contexts/UserContext";
 import "../css/Home.css";
 
 function Home() {
-  const { user, isAuthenticated, login, logout } = useAuth();
-  if (!isAuthenticated) {
-    return <h2>Please log in to see the homepage.</h2>;
-  }
+  return <>
+  </>
+  // const { user, isAuthenticated, login, logout } = useAuth();
+  // if (!isAuthenticated) {
+  //   return <h2>Please log in to see the homepage.</h2>;
+  // }
 
-  return (
-    <div>
-      <h1>Welcome, {user?.firstName ?? "Guest"}</h1>{" "}
-      <button onClick={logout}>Logout</button>
-    </div>
-  );
+  // return (
+  //   <div>
+  //     <h1>Welcome, {user?.firstName ?? "Guest"}</h1>{" "}
+  //   </div>
+  // );
 }
 
 export default Home;

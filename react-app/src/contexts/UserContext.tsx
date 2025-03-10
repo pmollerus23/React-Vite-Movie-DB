@@ -97,6 +97,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           isAuthenticated: false
         });
         console.log("something bad happened", error);
+        throw error;
       });
     };
 
@@ -134,6 +135,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       token: null,
       isAuthenticated: false,
     });
+    alert("You are now logged out")
   };
 
   return (

@@ -1,7 +1,16 @@
 .home {
+  display: flex;
+    justify-content: center;  /* Horizontally center the form */
+    align-items: center;      /* Vertically center the form */
+    height: 100vh;     
   padding: 2rem 0;
   width: 100%;
   box-sizing: border-box;
+   /* Background image setup */
+   background-image: url('../assets/globe.svg');  /* Path to your SVG file */
+   background-position: right center;  /* Position the image on the right */
+   background-repeat: no-repeat;      /* Prevent repeating the image */
+   background-size: 70%;      
 }
 
 .search-form {

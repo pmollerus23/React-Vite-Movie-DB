@@ -12,6 +12,16 @@
   font-weight: bold;
 }
 
+.navbar-user-info {
+  font-size: 1.3rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  flex-direction: column; /* Stack the navbar items vertically */
+  align-items: flex-start; /* Align items to the left (default) */
+  color: white;
+}
+
 .navbar-links {
   display: flex;
   gap: 2rem;

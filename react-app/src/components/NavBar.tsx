@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../contexts/UserContext";
 import "../css/Navbar.css";
 
-function NavBar() {
+const NavBar = () => {
+  const { user, isAuthenticated, logout } = useAuth();
+
   return (
     <nav className="navbar">
       <div className="navbar-brand">
@@ -11,15 +14,35 @@ function NavBar() {
         <Link to="/" className="nav-link">
           Home
         </Link>
-        <Link to="/login" className="nav-link">
-          Login
-        </Link>
-        <Link to="/register" className="nav-link">
-          Register
-        </Link>
+        {!isAuthenticated ? (
+          <>
+            <Link to="/login" className="nav-link">
+              Login
+            </Link>
+            <Link to="/register" className="nav-link">
+              Register
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link to="/profile" className="nav-link">
+              Profile
+            </Link>
+
+            <button onClick={logout}>Logout</button>
+          </>
+        )}
       </div>
+      {isAuthenticated ? (
+        <div className="navbar-user-info">
+        Welcome, {user?.firstName}!
+      </div>
+      ) : (
+        <></>
+      )}
+      
     </nav>
   );
-}
+};
 
 export default NavBar;

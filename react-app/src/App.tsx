@@ -18,6 +18,8 @@ function App() {
  useEffect(() => {
   if (isAuthenticated === true && user === null) {
     navigate("/profile"); // Navigate to Profile page if user is not set up
+  } else if (isAuthenticated == false) {
+    navigate("/login");
   }
 }, [user, isAuthenticated]); // Runs whenever the user value changes
 
