@@ -64,8 +64,8 @@
   }
   
   .login input:focus {
-    border-color: #7d7d7d;  /* Slightly lighter gray on focus */
-    background-color: #555;  /* Lighten background on focus */
+    border-color: #c7c2c2;  /* Slightly lighter gray on focus */
+    background-color: #c7c2c2;  /* Lighten background on focus */
   }
   
   .login button {
