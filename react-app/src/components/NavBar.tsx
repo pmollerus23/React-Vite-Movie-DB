@@ -35,7 +35,7 @@ const NavBar = () => {
       </div>
       {isAuthenticated ? (
         <div className="navbar-user-info">
-        Welcome, {user?.firstName}!
+        Welcome{user ? ", " + user.firstName + "!" : "!"}
       </div>
       ) : (
         <></>
